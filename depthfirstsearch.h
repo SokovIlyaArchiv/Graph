@@ -3,5 +3,5 @@
 class DepthFirstSearch : public Search{
 public:
     DepthFirstSearch(std::vector<Vertex*>&);
-    void oneStep();
+    Vertex* oneStep(Vertex*);
 };

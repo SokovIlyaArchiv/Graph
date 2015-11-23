@@ -16,11 +16,15 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     graph.cpp \
     search.cpp \
-    depthfirstsearch.cpp
+    depthfirstsearch.cpp \
+    screen.cpp \
+    breadthfirstsearch.cpp
 
 HEADERS  += mainwindow.h \
     vertex.h \
     point.h \
     graph.h \
     search.h \
-    depthfirstsearch.h
+    depthfirstsearch.h \
+    screen.h \
+    breadthfirstsearch.h

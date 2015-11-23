@@ -4,6 +4,21 @@ DepthFirstSearch::DepthFirstSearch(std::vector<Vertex *> &vertices) :
     Search(vertices) {
 }
 
-void DepthFirstSearch::oneStep() {
-
+Vertex* DepthFirstSearch::oneStep(Vertex* current) {
+        if(queue.size() == 0) {
+            queue.push_back(current);
+        }
+        for(auto& vertex:current->connections) {
+            if(vertex->visited == false) {
+                queue.push_back(vertex);
+                vertex->visited = true;
+                return vertex;
+            }
+        }
+        if(queue.size() > 1) {
+            queue.erase(queue.end()-1);
+            return queue[queue.size()-1];
+        } else {
+            return queue[0];
+        }
 }

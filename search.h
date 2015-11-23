@@ -6,11 +6,8 @@ class Search {
 public:
     Search(std::vector<Vertex*>&);
     virtual ~Search();
-    virtual void oneStep() = 0;
-    void setStartVertex(Vertex*);
-    void setFinishVertex(Vertex*);
-    Vertex *getCurrentVertex();
+    virtual Vertex* oneStep(Vertex*) = 0;
 protected:
-    Vertex *startVertex, *finishVertex, *currentVertex;
     std::vector<Vertex*>& vertices;
+    std::vector<Vertex*> queue;
 };

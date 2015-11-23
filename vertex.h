@@ -1,4 +1,5 @@
 #pragma once
+typedef unsigned short ushort;
 #include "point.h"
 #include <vector>
 const ushort USHORT_MAX = 65535;
@@ -7,7 +8,7 @@ struct Vertex {
         position(position) {
         lengthMinWay = USHORT_MAX;
     }
-    bool visited;
+    bool visited = false;
     ushort lengthMinWay;
     Point position;
     std::vector<Vertex*> connections;

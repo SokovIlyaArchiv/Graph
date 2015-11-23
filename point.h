@@ -1,10 +1,9 @@
 #pragma once
-typedef unsigned short ushort;
-
+#include <QDebug>
 struct Point {
-    Point(ushort x = 0, ushort y = 0) :
+    Point(float x = 0, float y = 0) :
         x(x), y(y) {
     }
 
-    ushort x,y;
+    float x,y;
 };
