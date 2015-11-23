@@ -16,8 +16,9 @@ private:
     QMenuBar* menuBar;
     QMenu *global,*init, *method;
     QAction *start, *finish,
-            *restart,
-            *setDFS, *setBFS;
+            *restart, *clearAll,
+            *setDFS, *setBFS, *setDSA,
+            *autoStep;
     void createUI();
     void createObjects();
     void createConnects();

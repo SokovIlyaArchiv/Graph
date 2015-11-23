@@ -6,4 +6,3 @@ Search::Search(std::vector<Vertex *> &vertices) :
 Search::~Search() {
 
 }
-

@@ -3,13 +3,16 @@
 #include "search.h"
 #include "depthfirstsearch.h"
 #include "breadthfirstsearch.h"
+#include "dijkstrassearchalgorithm.h"
+#include <QTimer>
 enum class TYPE { COMMON, START, FINISH, CURRENT };
 class Graph {
 public:
     Graph();
-    void init();
-    void oneStep();
+    void oneStep(ushort, ushort);
     void restart();
+    void clearAll();
+    void setDSAMode();
     void setDFSMode();
     void setBFSMode();
     void setStartVertex(Vertex*);
@@ -22,9 +25,11 @@ public:
     Vertex* getVertex(ushort);
     TYPE getVertexType(Vertex*);
 private:
+    void init();
     Vertex *startVertex, *finishVertex, *currentVertex;
     std::vector<Vertex*> vertices;
     Search *search;
     DepthFirstSearch *depthSearch;
     BreadthFirstSearch *breadthSearch;
+    DijkstrasSearchAlgorithm *dijkstrasSearch;
 };

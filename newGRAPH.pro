@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     search.cpp \
     depthfirstsearch.cpp \
     screen.cpp \
-    breadthfirstsearch.cpp
+    breadthfirstsearch.cpp \
+    dijkstrassearchalgorithm.cpp
 
 HEADERS  += mainwindow.h \
     vertex.h \
@@ -27,4 +28,5 @@ HEADERS  += mainwindow.h \
     search.h \
     depthfirstsearch.h \
     screen.h \
-    breadthfirstsearch.h
+    breadthfirstsearch.h \
+    dijkstrassearchalgorithm.h

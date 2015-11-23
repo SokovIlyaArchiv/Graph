@@ -4,7 +4,7 @@ DepthFirstSearch::DepthFirstSearch(std::vector<Vertex *> &vertices) :
     Search(vertices) {
 }
 
-Vertex* DepthFirstSearch::oneStep(Vertex* current) {
+Vertex* DepthFirstSearch::oneStep(Vertex* current, ushort, ushort) {
         if(queue.size() == 0) {
             queue.push_back(current);
         }
@@ -12,6 +12,7 @@ Vertex* DepthFirstSearch::oneStep(Vertex* current) {
             if(vertex->visited == false) {
                 queue.push_back(vertex);
                 vertex->visited = true;
+                vertex->lengthMinWay = current->lengthMinWay+1;
                 return vertex;
             }
         }

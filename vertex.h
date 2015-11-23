@@ -9,7 +9,7 @@ struct Vertex {
         lengthMinWay = USHORT_MAX;
     }
     bool visited = false;
-    ushort lengthMinWay;
+    unsigned int lengthMinWay;
     Point position;
     std::vector<Vertex*> connections;
 };

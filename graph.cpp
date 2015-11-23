@@ -3,19 +3,24 @@ Graph::Graph() {
     startVertex = currentVertex = finishVertex = nullptr;
     depthSearch = new DepthFirstSearch(vertices);
     breadthSearch = new BreadthFirstSearch(vertices);
-    search = breadthSearch;
+    dijkstrasSearch = new DijkstrasSearchAlgorithm(vertices);
+    search = dijkstrasSearch;
 }
 
 void Graph::init() {
     if(vertices.size() > 0) {
         if(startVertex == nullptr) {
             startVertex = vertices[0];
+            startVertex->lengthMinWay = 0;
         }
         if(finishVertex == nullptr) {
             finishVertex = vertices[vertices.size()-1];
         }
         if(currentVertex == nullptr) {
             currentVertex = startVertex;
+        }
+        if(startVertex->lengthMinWay != 0) {
+            startVertex->lengthMinWay = 0;
         }
     }
 }
@@ -29,6 +34,10 @@ void Graph::setBFSMode()
     search = breadthSearch;
 }
 
+void Graph::setDSAMode() {
+    search = dijkstrasSearch;
+}
+
 void Graph::setStartVertex(Vertex *vertex) {
     startVertex = vertex;
 }
@@ -37,24 +46,36 @@ void Graph::setFinishVertex(Vertex *vertex) {
     finishVertex = vertex;
 }
 
-void Graph::oneStep() {
+void Graph::oneStep(ushort width, ushort height) {
     init();
+    if(currentVertex != finishVertex) {
+
+    }
     if(vertices.size() != 0) {
-        currentVertex = search->oneStep(currentVertex);
+        currentVertex = search->oneStep(currentVertex,width,height);
     }
 }
 
 void Graph::restart() {
     delete depthSearch;
     delete breadthSearch;
+    delete dijkstrasSearch;
     depthSearch = new DepthFirstSearch(vertices);
     breadthSearch = new BreadthFirstSearch(vertices);
-    search = breadthSearch;
+    dijkstrasSearch = new DijkstrasSearchAlgorithm(vertices);
+    search = dijkstrasSearch;
     for(auto& vertex:vertices) {
         vertex->visited = false;
         vertex->lengthMinWay = USHORT_MAX;
     }
     currentVertex = startVertex;
+    init();
+}
+
+void Graph::clearAll() {
+    while(vertices.size() != 0) {
+        delVertex(vertices[0]);
+    }
 }
 
 void Graph::addVertex(Point position) {
@@ -69,13 +90,6 @@ void Graph::delEdge(Vertex *vertexOne, Vertex *vertexTwo) {
     for(ushort c = 0; c < vertexOne->connections.size(); c++) {
         if(vertexOne->connections[c] == vertexTwo) {
             vertexOne->connections.erase(vertexOne->connections.begin()+c);
-        }
-    }
-    for(auto& vertex:vertices) {
-        for(ushort c = 0; c < vertex->connections.size(); c++) {
-            if(vertex->connections[c] == vertexOne) {
-                vertex->connections.erase(vertex->connections.begin()+c);
-            }
         }
     }
     restart();
@@ -131,4 +145,3 @@ TYPE Graph::getVertexType(Vertex *vertex) {
     }
     return TYPE::COMMON;
 }
-

@@ -3,5 +3,5 @@
 class BreadthFirstSearch : public Search {
 public:
     BreadthFirstSearch(std::vector<Vertex*>&);
-    Vertex* oneStep(Vertex*);
+    Vertex* oneStep(Vertex*, ushort, ushort);
 };
