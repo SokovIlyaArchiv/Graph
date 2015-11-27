@@ -2,6 +2,7 @@
 typedef unsigned short ushort;
 #include "point.h"
 #include <vector>
+#include <QDebug>
 const ushort USHORT_MAX = 65535;
 struct Vertex {
     Vertex(Point position) :

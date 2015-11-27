@@ -9,6 +9,8 @@ enum class TYPE { COMMON, START, FINISH, CURRENT };
 class Graph {
 public:
     Graph();
+    void save();
+    void load();
     void oneStep(ushort, ushort);
     void restart();
     void clearAll();

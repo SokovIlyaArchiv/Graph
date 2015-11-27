@@ -15,7 +15,12 @@ Vertex* DijkstrasSearchAlgorithm::oneStep(Vertex* current, ushort width, ushort 
         queue.push_back(current);
     }
     for(auto& vertex:current->connections) {
-        if(vertex->lengthMinWay >= current->lengthMinWay + distance(current->position, vertex->position, width, height)) {
+        if(vertex->lengthMinWay > current->lengthMinWay + distance(current->position, vertex->position, width, height)) {
+            for(ushort c = 0; c < queue.size(); c++) {
+                if(queue[c] == vertex) {
+                    queue.erase(queue.begin()+c);
+                }
+            }
             queue.push_back(vertex);
             vertex->lengthMinWay = current->lengthMinWay +
                                    distance(current->position, vertex->position, width, height);
@@ -24,19 +29,15 @@ Vertex* DijkstrasSearchAlgorithm::oneStep(Vertex* current, ushort width, ushort 
     for(ushort c = 0; c < queue.size(); c++) {
         if(queue[c] == current) {
             queue.erase(queue.begin()+c);
-            break;
         }
     }
     ushort min = USHORT_MAX;
-    Vertex* ptrMin = nullptr;
+    Vertex* ptrMin = current;
     for(ushort c = 0; c < queue.size(); c++) {
         if(queue[c]->lengthMinWay <= min) {
             min = queue[c]->lengthMinWay;
             ptrMin = queue[c];
         }
-    }
-    if(ptrMin == nullptr) {
-        ptrMin = current;
     }
     ptrMin->visited = true;
     return ptrMin;

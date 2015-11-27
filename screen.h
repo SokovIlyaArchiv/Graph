@@ -11,6 +11,8 @@ public:
     explicit Screen(QWidget *parent = 0);
     Vertex* freePlace(Point);
     Vertex *getVertex(QMouseEvent*);
+    void load();
+    void save();
     void restart();
     void setTimer();
     void clearAll();

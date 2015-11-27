@@ -18,7 +18,7 @@ private:
     QAction *start, *finish,
             *restart, *clearAll,
             *setDFS, *setBFS, *setDSA,
-            *autoStep;
+            *autoStep, *load, *save;
     void createUI();
     void createObjects();
     void createConnects();

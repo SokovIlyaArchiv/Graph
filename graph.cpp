@@ -1,10 +1,55 @@
 #include "graph.h"
+#include <fstream>
 Graph::Graph() {
     startVertex = currentVertex = finishVertex = nullptr;
     depthSearch = new DepthFirstSearch(vertices);
     breadthSearch = new BreadthFirstSearch(vertices);
     dijkstrasSearch = new DijkstrasSearchAlgorithm(vertices);
     search = dijkstrasSearch;
+}
+
+void Graph::save() {
+    std::ofstream out("graph.txt");
+    short amountVertices = 0, amountEdges = 0;
+    amountVertices = vertices.size();
+    for(auto vertex:vertices){
+        amountEdges += vertex->connections.size();
+    }
+    out << amountVertices << " " << amountEdges << "\n";
+    for(auto vertex:vertices){
+        out << vertex->position.x << " " << vertex->position.y << "\n";
+    }
+    short counter = 0;
+    for(auto vertex:vertices){
+        for(ushort c = 0; c < vertex->connections.size(); c++){
+            for(ushort i = 0; i < vertices.size(); i++) {
+                if(vertex->connections[c] == vertices[i]){
+                    out << counter << " " << i << "\n";
+                    break;
+                }
+            }
+        }
+        counter++;
+    }
+    out.close();
+}
+
+void Graph::load() {
+    std::ifstream in("graph.txt");
+       if(in.is_open()){
+           short amountVertex,amountEdges,x,y;
+           double dx,dy;
+           in >> amountVertex >> amountEdges;
+           for(short c = 0; c < amountVertex; c++){
+               in >> dx >> dy;
+               addVertex(Point(dx,dy));
+           }
+           for(short c = 0; c < amountEdges; c++){
+               in >> x >> y;
+               addEdge(vertices[x],vertices[y]);
+           }
+           in.close();
+       }
 }
 
 void Graph::init() {

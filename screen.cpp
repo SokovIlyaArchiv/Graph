@@ -1,5 +1,6 @@
 #include "screen.h"
 #include <math.h>
+#include <QPolygon>
 Vertex *Screen::freePlace(Point vertex) {
     for(ushort c = 0; c < graph->getAmountVertices(); c++) {
         if(distance(graph->getVertex(c)->position,vertex) <= 20) {
@@ -91,11 +92,44 @@ void Screen::drawVertex(QPainter &painter) {
     }
 }
 void Screen::drawEdge(QPainter &painter) {
-    painter.setPen(QPen(QColor(230,50,10,128),10));
+    painter.setBrush(Qt::red);
     for(ushort c = 0; c < graph->getAmountVertices(); c++) {
         for(auto& vertex:graph->getVertex(c)->connections) {
+            painter.setPen(QPen(Qt::red,3));
             painter.drawLine( QPoint(width()/graph->getVertex(c)->position.x, height()/graph->getVertex(c)->position.y),
                               QPoint(width()/vertex->position.x, height()/vertex->position.y) );
+            int x1 = width()/graph->getVertex(c)->position.x,
+                y1 = height()/graph->getVertex(c)->position.y,
+                x2 = width()/vertex->position.x,
+                y2 = height()/vertex->position.y,x3,y3;
+            x1 = (x1+x2)/2;
+            y1 = (y1+y2)/2;
+            float a = (double)(y2-y1)/(x2-x1);
+            x3 = (int)(sqrt(225/(1+pow(a,2)))+0.5);
+            if((x1 != x2)&&(abs(x1-x2) > 8)) {
+                y3 =  a*x3;
+                if(x1 < x2) {
+                    x3+=x1;
+                    y3+=y1;
+                } else {
+                    x3=x1-x3;
+                    y3=y1-y3;
+                }
+            } else {
+                y3 = 15;
+                x3 = 0;
+                if(y1 < y2) {
+                    x3+=x1;
+                    y3+=y1;
+                } else {
+                    x3=x1-x3;
+                    y3=y1-y3;
+                }
+            }
+            painter.setPen(QPen(Qt::red,1));
+            QPolygon    polygon;
+            polygon << QPoint(x1,y1) << QPoint(x1-(y3-y1),y1+(x3-x1)) << QPoint(x3,y3) << QPoint(x1+(y3-y1),y1-(x3-x1));
+            painter.drawPolygon(polygon);
         }
     }
 }
@@ -163,6 +197,15 @@ ushort Screen::distance(Point pointOne, Point pointTwo) {
 }
 Vertex* Screen::getVertex(QMouseEvent* event) {
     return freePlace (Point((double)width()/event->pos().x(),(double)height()/event->pos().y()));
+}
+
+void Screen::load() {
+    graph->load();
+    update();
+}
+
+void Screen::save() {
+    graph->save();
 }
 
 void Screen::mousePressEvent(QMouseEvent *event) {

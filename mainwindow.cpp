@@ -21,6 +21,8 @@ void MainWindow::createUI() {
     global->addAction(restart);
     global->addAction(clearAll);
     global->addAction(autoStep);
+    global->addAction(load);
+    global->addAction(save);
     init->addAction(start);
     init->addAction(finish);
     method->addAction(setDFS);
@@ -42,6 +44,8 @@ void MainWindow::createObjects() {
     setBFS = new QAction("Поиск в ширину",this);
     setDSA = new QAction("Алгорим Дейкстры",this);
     autoStep = new QAction("Авто-обход",this);
+    load = new QAction("Загрузить граф",this);
+    save = new QAction("Сохранить граф",this);
 }
 
 void MainWindow::createConnects() {
@@ -53,4 +57,6 @@ void MainWindow::createConnects() {
     connect(restart, &QAction::triggered, screen, &Screen::restart);
     connect(clearAll, &QAction::triggered, screen, &Screen::clearAll);
     connect(autoStep, &QAction::triggered, screen, &Screen::setTimer);
+    connect(load, &QAction::triggered, screen, &Screen::load);
+    connect(save,&QAction::triggered, screen, &Screen::save);
 }
